@@ -133,7 +133,6 @@ class OnkyoBackgroundWorker(threading.Thread):
 class OnkyoSerial():
     _serial = None
     _worker_thread = None
-    on_state_change = Event()
 
     @property
     def _port(self):
@@ -147,6 +146,7 @@ class OnkyoSerial():
 
     def __init__(self, config, zone, sources=SOURCES, port='/dev/ttyUSB0', baudrate=9600, timeout=10, rtscts=0, xonxoff=0):
         """Initialize an instance of the Onkyo class to manage communication with the Onkyo receiver."""
+        self.on_state_change = Event()
         self._sources = sources
         self._reverse_sources = {value: key for key, value in sources.items()}
         self._zone = zone
