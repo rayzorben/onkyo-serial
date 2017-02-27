@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='onkyo_serial',
-            version='0.0.1',
+            version='0.0.2',
             description='Onkyo receiver control via RS232.',
             author='rayzorben',
             url='https://github.com/rayzorben/onkyo-serial',
