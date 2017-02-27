@@ -1,8 +1,8 @@
 import threading
 import re
 import time
-from .log import logging
-from .event import Event
+from . log import logging
+from . event import Event
 from serial import Serial
 from yaml import load, dump
 
@@ -121,13 +121,19 @@ class OnkyoBackgroundWorker(threading.Thread):
                             break
 
                 if zone and prop:
-                    val = self.process(prop, val)
-                    logger.debug('zone: %s, property: %s, value: %s', zone, prop, val)
-                    self.state_changed(zone, prop, val)
+                    if prop in self.messages:
+                        val = self.process(prop, val)
+                        logger.debug('zone: %s, property: %s, value: %s', zone, prop, val)
+                        self.state_changed(zone, prop, val)
+                    else:
+                        logger.debug('Received unknown response: %s', match.group())
+            else:
+                logger.debug('Received unknown response: %s', out)
 
 class OnkyoSerial():
     _serial = None
     _worker_thread = None
+    on_state_change = Event()
 
     @property
     def _port(self):
@@ -178,8 +184,9 @@ class OnkyoSerial():
     def state_change(self, zone, prop, value):
         """Handle a state change from the worker thread."""
         if zone == self._zone:
-            logger.info("state change [{z}] {k}={v}".format(z=zone, k=prop, v=value))
+            logger.debug("state change [{z}] {k}={v}".format(z=zone, k=prop, v=value))
             self.__dict__['_' + prop] = value
+            self.on_state_change(prop, value)
 
     def power_on(self):
         """Send power on command."""
@@ -205,6 +212,9 @@ class OnkyoSerial():
         """Send volume level command."""
         if 'volume' in self._commands:
             self.command(self._commands['volume'] + format(level, '02X'))
+
+    def raw(self, command):
+        self.command(command)
 
     def source(self, input):
         """Send set input source command."""
