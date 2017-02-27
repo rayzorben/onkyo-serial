@@ -6,7 +6,7 @@
     <ProjectGuid>37e4b8b7-83c5-448b-8118-9a5c7cb08fa2</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>onkyo.py</StartupFile>
+    <StartupFile>onkyo_serial\onkyo.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -24,16 +24,22 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="event.py">
+    <Compile Include="onkyo_serial\event.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="log.py">
+    <Compile Include="onkyo_serial\log.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="onkyo.py" />
-    <Compile Include="__init__.py">
+    <Compile Include="onkyo_serial\onkyo.py" />
+    <Compile Include="onkyo_serial\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="setup.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="onkyo_serial\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
