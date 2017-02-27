@@ -13,8 +13,7 @@
     <OutputPath>.</OutputPath>
     <Name>onkyo-serial</Name>
     <RootNamespace>onkyo</RootNamespace>
-    <PublishUrl>
-    </PublishUrl>
+    <PublishUrl>z:\onkyo</PublishUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
